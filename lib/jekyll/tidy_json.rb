@@ -11,7 +11,7 @@ module Jekyll
       end
 
       def should_tidy?(path)
-        File.extname(path).downcase == ".json"
+        enabled? && File.extname(path).downcase == ".json"
       end
 
       def tidy_page_or_document(page_or_document)
@@ -24,7 +24,6 @@ module Jekyll
       end
 
       def tidy_string(string)
-        return string if !enabled?
         json = JSON.parse(string)
         meth = self.pretty? ? :pretty_generate : :fast_generate
 
