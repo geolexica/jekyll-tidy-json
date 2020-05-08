@@ -24,7 +24,7 @@ module Jekyll
       end
 
       def tidy_string(string)
-        return string if !enabled? || string.empty?
+        return string if !enabled?
         json = JSON.parse(string)
         meth = self.pretty? ? :pretty_generate : :fast_generate
 

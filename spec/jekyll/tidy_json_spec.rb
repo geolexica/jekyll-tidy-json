@@ -56,15 +56,6 @@ RSpec.describe Jekyll::TidyJSON do
     expect(malformed_page.output).to eq(malformed_input)
   end
 
-  it "returns empty string for empty input" do
-    input = ""
-    page = fake_page(input)
-    process(page, {"pretty": false})
-    expect(page.output).to eq(input)
-    process(page, {"pretty": true})
-    expect(page.output).to eq(input)
-  end
-
   it "works with top-level arrays" do
     config = {"pretty": false}
     input = '[1, 2, {"three": 3}]'
