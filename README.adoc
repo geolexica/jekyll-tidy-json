@@ -1,0 +1,87 @@
+= Jekyll-Tidy-JSON
+
+ifdef::env-github[]
+image:https://img.shields.io/gem/v/jekyll-tidy-json[
+    "Gem Version",
+    link="https://rubygems.org/gems/jekyll-tidy-json"]
+image:https://img.shields.io/github/workflow/status/geolexica/jekyll-tidy-json/Tests[
+    "Build Status",
+    link="https://github.com/geolexica/jekyll-tidy-json/actions"]
+endif::[]
+
+A Jekyll plugin that cleans JSONs up.
+
+It takes a JSON page and applies consistent formatting rules to it.  If that
+input is malformed, then raises an exception preventing you from deploying
+a buggy site.
+
+If you use Liquid templates to build JSONs for your site, then you probably
+really want it.
+
+== Installation
+
+Include this gem in your site's Gemfile under the `jekyll_plugins` group:
+
+[source,lang=sh]
+----
+group :jekyll_plugins do
+  gem "jekyll-tidy-json"
+end
+----
+
+Visit https://jekyllrb.com/docs/plugins/installation/[Jekyll documentation]
+for a detailed description or more installation options.
+
+== Configuration
+
+This plugin's behaviour is steered by "tidy_json" entry in site's `_config.yml`.
+For example, following enables JSON prettifying:
+
+[source,lang=yaml]
+----
+tidy_json:
+  pretty: true
+----
+
+Available configuration options:
+
+[cols=3*,options="header"]
+|===
+| Option name
+| Description
+| Default setting
+
+| `enabled`
+| Can be used to disable the plugin entirely by setting it to `false`.
+| `true`
+
+| `pretty`
+| If set to `true`, then JSONs will be prettified for readability sake.  If
+set to `false`, then all unnecessary spaces and new lines will be removed.
+| `false`
+|===
+
+== TODO
+
+This plugin is fairly complete.  However, some enhancements would be welcome:
+
+- more options for pretty formatting
+- options for including/excluding JSON files
+- JSON sanitizing features, perhaps by integrating
+  https://github.com/OWASP/json-sanitizer[json-sanitizer] by OWASP
+- support for some improved JSON syntax like https://json5.org/[JSON5]
+  or http://www.relaxedjson.org/[Relaxed JSON] if any of them gets popular
+  enough
+
+== Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/geolexica/jekyll-tidy-json.
+
+== Credits
+
+This gem is developed, maintained and funded by
+https://www.ribose.com[Ribose Inc.]
+
+== License
+
+This gem is licensed under MIT license.
