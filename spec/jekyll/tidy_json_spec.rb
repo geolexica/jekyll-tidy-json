@@ -22,7 +22,6 @@ RSpec.describe Jekyll::TidyJSON do
   it "produces a pretty output when 'pretty' setting is on" do
     config = {pretty: true}
     output = process(valid_input, config)
-    expected_output = valid_input
     expected_output = (<<~JSON).chomp
       {
         "n": 1,
