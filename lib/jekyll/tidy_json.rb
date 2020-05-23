@@ -15,12 +15,16 @@ module Jekyll
       end
 
       def tidy_page_or_document(page_or_document)
+        if should_tidy?(page_or_document.relative_path)
+          tidy_page_or_document!(page_or_document)
+        end
+      end
+
+      def tidy_page_or_document!(page_or_document)
         path = page_or_document.relative_path
 
-        if should_tidy?(path)
-          Jekyll.logger.debug("Tidy up JSON:", path)
-          page_or_document.output = tidy_string(page_or_document.output)
-        end
+        Jekyll.logger.debug("Tidy up JSON:", path)
+        page_or_document.output = tidy_string(page_or_document.output)
       end
 
       def tidy_string(string)
