@@ -25,6 +25,9 @@ module Jekyll
 
         Jekyll.logger.debug("Tidy up JSON:", path)
         page_or_document.output = tidy_string(page_or_document.output)
+      rescue JSON::ParserError
+        print_parse_error(!continue_on_error?, $!, path)
+        raise unless continue_on_error?
       end
 
       def tidy_string(string)
@@ -32,6 +35,10 @@ module Jekyll
         meth = self.pretty? ? :pretty_generate : :fast_generate
 
         JSON.public_send meth, json
+      end
+
+      def continue_on_error?
+        !!@continue_on_error
       end
 
       def pretty?
@@ -45,8 +52,16 @@ module Jekyll
       private
 
       def parse_plugin_config(pc)
+        @continue_on_error = pc.fetch("continue_on_error", false)
         @enabled = pc.fetch("enabled", true)
         @pretty = pc.fetch("pretty", false)
+      end
+
+      def print_parse_error(is_fatal, exception, file_path)
+        logger = Jekyll.logger.public_method(is_fatal ? :error : :warn)
+
+        logger.("Malformed JSON at path:", file_path)
+        logger.(exception)
       end
     end
   end

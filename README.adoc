@@ -51,6 +51,13 @@ Available configuration options:
 | Description
 | Default setting
 
+| `continue_on_error`
+| If set to `false`, any malformed JSON encounter will raise error, preventing
+site from being built.  If set to `true`, all malformed files are exempted from
+being tidied up with a meaningful warning being printed, but site generation
+continues.
+| `false`
+
 | `enabled`
 | Can be used to disable the plugin entirely by setting it to `false`.
 | `true`

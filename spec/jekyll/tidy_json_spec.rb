@@ -46,11 +46,28 @@ RSpec.describe Jekyll::TidyJSON do
     expect(valid_page.output).to eq(expected_output)
   end
 
-  it "raises an exception for malformed input" do
-    expect { process(malformed_page, {pretty: false}) }.
-      to raise_exception(JSON::ParserError)
-    expect { process(malformed_page, {pretty: true}) }.
-      to raise_exception(JSON::ParserError)
+  it "raises an exception for malformed input " \
+    "when 'continue_on_error' setting is off" do
+    config = {continue_on_error: false}
+    expect { process(malformed_page, config.merge({pretty: false})) }.
+      to raise_exception(JSON::ParserError).
+      and output(/Malformed JSON/).to_stderr
+    expect { process(malformed_page, config.merge({pretty: true})) }.
+      to raise_exception(JSON::ParserError).
+      and output(/Malformed JSON/).to_stderr
+
+    # Expect no change
+    expect(malformed_page.output).to eq(malformed_input)
+  end
+
+  it "does nothing for malformed input, just prints a warning "\
+    "when 'continue_on_error' setting is on" do
+    config = {continue_on_error: true}
+    expect { process(malformed_page, config.merge({pretty: false})) }.
+      to output(/Malformed JSON/).to_stderr
+
+    expect { process(malformed_page, config.merge({pretty: true})) }.
+      to output(/Malformed JSON/).to_stderr
 
     # Expect no change
     expect(malformed_page.output).to eq(malformed_input)
