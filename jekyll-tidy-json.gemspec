@@ -1,4 +1,4 @@
-require_relative 'lib/jekyll/tidy_json/version'
+require_relative "lib/jekyll/tidy_json/version"
 
 ALL_FILES_IN_GIT = Dir.chdir(__dir__) { `git ls-files -z`.split("\x0") }
 
