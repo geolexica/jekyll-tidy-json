@@ -61,7 +61,6 @@ module Jekyll
         logger = Jekyll.logger.public_method(is_fatal ? :error : :warn)
 
         logger.("Malformed JSON at path:", file_path)
-        logger.(exception)
       end
     end
   end
