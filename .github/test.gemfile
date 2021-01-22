@@ -1,0 +1,3 @@
+eval_gemfile "../Gemfile"
+
+gem "jekyll", "~> #{ENV["JEKYLL_VERSION"]}.0"

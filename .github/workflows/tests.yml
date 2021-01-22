@@ -4,11 +4,27 @@ on: [push, pull_request]
 
 jobs:
   test:
+    name: Jekyll ${{ matrix.jekyll }} on Ruby ${{ matrix.ruby }}
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        jekyll: [ "3.8", "3.9", "4.0", "4.1", "4.2" ]
+        ruby: [ "2.5", "2.6", "2.7", "3.0" ]
+
+        exclude:
+          - { ruby: "3.0", jekyll: "3.8" } # incompatible
+
+    env:
+      BUNDLE_GEMFILE: .github/test.gemfile
+      JEKYLL_VERSION: ${{ matrix.jekyll }}
 
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
     - name: Install dependencies
       run: bundle install
     - name: Run tests
